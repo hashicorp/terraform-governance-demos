@@ -1,28 +1,44 @@
 > **Disclaimer**
 > 
-> INTERNAL USE ONLY
+> For demonstration purposes only
 
 # Terraform Foundational Policies Demonstration 
 This demonstration uses Terraform Cloud to provide a working example of how the Terraform Foundational Policy Library can be used to enforce controls for a Kubernetes Cluster running in GCP. 
 
 ---
 
+## Table of Contents
+- [Prerequisites](#Prerequisites)
+- [Setup](#setup)
+- [Provision Demo Resources](#provision-demo-resources)
+- [Demo Script](#demo-script)
+- [References](#references)
+
+---
+
 ## Prerequisites
 
-This demo setup assumes that you already have the following:
+↥ [back to top](#table-of-contents)
 
-1. Access to Terraform Cloud / Enterprise
-1. Access to a GitHub Organization
-1. Access to a Google Cloud Project
+This demo setup assumes that you already have completed the following:
 
+1. [Created a GitHub Organization](https://help.github.com/en/enterprise/2.16/admin/user-management/creating-organizations) 
+1. [Signed up or have access to Terraform Cloud](https://app.terraform.io/signup/account) or have access to Terraform Cloud
+1. [Finished the Getting Started with Terraform Cloud](https://www.terraform.io/docs/cloud/getting-started/index.html)
+1. [Signed up or have access to the Google Cloud Platform](https://cloud.google.com/free) 
+1. [Created a Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 
 > **Important!**
 >
-> This demo does not support the Github free tier. You will need to setup an organization before you progress any further. GitHub organizations and team collaboration are now a free feature. You can find out more by reviewing the following: https://github.blog/2020-04-14-github-is-now-free-for-teams/
+> This demo does not support the Github free tier. You will need to setup an organization by following the links above before progressing any further. GitHub organizations and team collaboration are now a free feature. You can find out more by reviewing the [**GitHub is now free for teams**](https://github.blog/2020-04-14-github-is-now-free-for-teams/) announcement.
+>
+> This demo also requires that you create a [GitHub Personal Access Token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) with `repo`, `admin:org` and `delete_repo` scope permissions.
 
 ---
 
 ## Setup
+
+↥ [back to top](#table-of-contents)
 
 1. Login to Terraform Cloud via the CLI and follow the prompts
 
@@ -47,14 +63,10 @@ gcp_region            = "GCP_REGION"
 ```
 > **Note:** 
 > 
-> The `.gitignore` has been configured to exclude this file and is used by Terraform to provision the remote backend and configure environment variables within the Terraform workspaces.
+> The `.gitignore` has been configured to exclude all `*.auto.tfvars` and `*.json` files in order to prevent the leaking of secrets.
 > 
-> **References:**
-> - Terraform - [Creating Terraform User API Tokens](https://www.terraform.io/docs/cloud/users-teams-organizations/users.html#api-tokens)
-> - GitHub - [Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
-> - GCP - [Creating Your Project](https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project)
-> - GCP - [Creating and managing service account keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
-> - GCP - [Regions and Zones](https://cloud.google.com/compute/docs/regions-zones)
+> You can identify the value of the github_oauth_token_id by browsing to **Settings** ⮕ **VCS Providers** and copying the value of **OAUTH Token ID**.
+> ![vcs_policy_config](./images/oauth_token_id.png)
 
 2. Update the organization name in the [backend.hcl](./backend.hcl)
 
@@ -67,6 +79,8 @@ organization = "YOUR_ORG_NAME_HERE"
 ---
 
 ## Provision Demo Resources
+
+↥ [back to top](#table-of-contents)
 
 1. Initialize the Terraform workspace 
 
@@ -107,9 +121,7 @@ commands will detect it and remind you to do so if necessary.
 
 > **Note:**
 >
-> In this demo we are initializing a remote backend in Terraform Cloud using remote operations. Once the `init` phase has completed you will notice that a new workspace called `terraform-governance-demos` has been created in your Terraform organization. This workspace is primarily reponsible for boot strapping the demo (repos, workspace, policy set, config etc.). 
->
-> For more information on Remote Operations, please review the Terraform [documentation](https://www.terraform.io/docs/backends/operations.html).
+> In this demo we are initializing a remote backend in Terraform Cloud using [Remote Operations](https://www.terraform.io/docs/backends/operations.html). Once the `init` phase has completed you will notice that a new workspace called `terraform-governance-demos` has been created in your Terraform organization. The primary responsibility of this workspace is to bootstrap the demo environment (repository(s), workspace, policy set, config etc.). Running `terraform destroy` will not delete this workspace. This is a manual operation and will need to be carried out from within the Terraform Cloud UI.
 
 3. Review the plan
 ```bash
@@ -121,7 +133,7 @@ will stop streaming the logs, but will not stop the plan running remotely.
 Preparing the remote plan...
 
 To view this run in a browser, visit:
-https://app.terraform.io/app/ORG/provision-terraform-foundational-policies-library/runs/run-i45QeMDuW4Vi2Lmk
+https://app.terraform.io/app/your_org_name/terraform-governance-demos/runs/run-i45QeMDuW4Vi2Lmk
 
 Waiting for the plan to start...
 
@@ -147,7 +159,7 @@ will stop streaming the logs, but will not stop the apply running remotely.
 Preparing the remote apply...
 
 To view this run in a browser, visit:
-https://app.terraform.io/app/AQIT/provision-terraform-foundational-policies-library/runs/run-WCfA7rdBy8Ke5Xc6
+https://app.terraform.io/app/your_org_name/terraform-governance-demos/runs/run-WCfA7rdBy8Ke5Xc6
 
 Waiting for the plan to start...
 
@@ -170,7 +182,7 @@ Terraform will perform the following actions:
 ...
 Plan: 11 to add, 0 to change, 0 to destroy.
 
-Do you want to perform these actions in workspace "provision-terraform-foundational-policies-library"?
+Do you want to perform these actions in workspace "terraform-governance-demos"?
   Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
 
@@ -179,6 +191,8 @@ Do you want to perform these actions in workspace "provision-terraform-foundatio
 ---
 
 ## Demo Script
+
+↥ [back to top](#table-of-contents)
 
 1. In GitHub, show the policy configuration by browsing to your organization, selecting the `cis-gcp-kubernetes-foundational-policies` repository and reviewing the contents of the `sentinel.hcl` file.
 
@@ -227,3 +241,19 @@ Do you want to perform these actions in workspace "provision-terraform-foundatio
 ![policy_check_pass](./images/policy_check_pass.png)
 
 ---
+
+## References
+
+↥ [back to top](#table-of-contents)
+
+### Terraform Cloud / Enterprise
+- [Creating Terraform User API Tokens](https://www.terraform.io/docs/cloud/users-teams-organizations/users.html#api-tokens)
+
+### GitHub
+- [Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+- [Managing GitHub with Terraform](https://www.hashicorp.com/blog/managing-github-with-terraform/)
+
+### Google Cloud Platform
+- [Creating Your Project](https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project)
+- [Creating and managing service account keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+- [Regions and Zones](https://cloud.google.com/compute/docs/regions-zones)

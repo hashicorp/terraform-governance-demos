@@ -1,3 +1,3 @@
 workspaces { name = "terraform-governance-demos" }
 hostname     = "app.terraform.io"
-organization = "AQIT"
+organization = "YOUR_ORG_NAME_HERE"
