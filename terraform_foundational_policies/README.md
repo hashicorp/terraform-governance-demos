@@ -198,13 +198,13 @@ Do you want to perform these actions in workspace "terraform-governance-demos"?
 
 ![vcs_policy_config](./images/vcs_policy_config.png)
 
-1. In Terraform, show the Terraform configuration by browsing to the organizational settings and viewing the configuration of the `cis-gcp-kubernetes-foundational-policies` Policy Set.
+1. In Terraform, show the Terraform configuration by browsing to the organizational settings and viewing the configuration of the `cis-gcp-kubernetes-foundational-policies` Policy Set. 
 
 ![policy_set](./images/policy_set.png)
 
 >**Important!**
 >
->Talk through the scoping of the Policy Set and show how it is scoped to the `demo-gcp-kubernetes-cluster` workspace. Also talk through working directories and branches etc.
+>Talk through the scoping of the Policy Set and configure the scope to apply to the `demo-gcp-kubernetes-cluster` workspace. Also talk through working directories and branches etc.
 
 3. In Terraform, show the plan by browsing to the latest run on the `demo-gcp-kubernetes-cluster` workspace and review the results for the `Plan`.
 
