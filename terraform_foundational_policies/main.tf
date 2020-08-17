@@ -20,7 +20,7 @@ resource "tfe_policy_set" "policy_set" {
   name         = github_repository.repo_policies.name
   description  = "Policy Set, to demonstrate the Terraform CIS policies for Kubernetes"
   organization = var.tfe_organization
-  workspace_external_ids = []
+  workspace_ids = []
 
   vcs_repo {
     identifier         = github_repository.repo_policies.full_name
