@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 output "kubernetes_cluster_endpoint" {
   description = "The IP address of this cluster's Kubernetes master"
   value       = google_container_cluster.this.endpoint
