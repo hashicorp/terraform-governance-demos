@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 provider "tfe" {
   hostname = var.tfe_hostname
   token    = var.tfe_token
